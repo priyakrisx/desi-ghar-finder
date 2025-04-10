@@ -5,15 +5,33 @@ import App from './App.tsx';
 import './index.css';
 import { ClerkProvider } from '@clerk/clerk-react';
 
-// Replace with your actual publishable key from Clerk
-const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY || "pk_test_your_key_here";
+// Get Clerk publishable key from environment
+const PUBLISHABLE_KEY = import.meta.env.VITE_CLERK_PUBLISHABLE_KEY;
 
-if (!PUBLISHABLE_KEY) {
-  throw new Error("Missing Clerk Publishable Key");
+// Check if we have a valid Clerk key (not the placeholder and not undefined)
+const hasValidClerkKey = PUBLISHABLE_KEY && 
+                        PUBLISHABLE_KEY !== "pk_test_your_key_here" && 
+                        PUBLISHABLE_KEY.startsWith('pk_');
+
+// Render the app with or without Clerk based on key availability
+const rootElement = document.getElementById("root");
+if (!rootElement) throw new Error("Root element not found");
+
+const root = createRoot(rootElement);
+
+if (hasValidClerkKey) {
+  // Render with Clerk authentication when a valid key is present
+  root.render(
+    <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
+      <App />
+    </ClerkProvider>
+  );
+} else {
+  // Render without Clerk when no valid key is available
+  console.warn("No valid Clerk publishable key found. Authentication is disabled.");
+  root.render(
+    <React.StrictMode>
+      <App />
+    </React.StrictMode>
+  );
 }
-
-createRoot(document.getElementById("root")!).render(
-  <ClerkProvider publishableKey={PUBLISHABLE_KEY}>
-    <App />
-  </ClerkProvider>
-);

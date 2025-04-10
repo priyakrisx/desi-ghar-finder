@@ -3,6 +3,7 @@ import React, { useState } from 'react';
 import { Link } from "react-router-dom";
 import { Menu, X, Home } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import Authentication from './Authentication';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -30,14 +31,9 @@ const Navbar: React.FC = () => {
             <Link to="/contact" className="text-neutral-700 hover:text-orange-600 font-medium">Contact</Link>
           </div>
 
-          {/* Login/Register Buttons */}
+          {/* Login/Register Buttons - Replace with Authentication component */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="outline" className="border-orange-600 text-orange-600 hover:bg-orange-50">
-              Log In
-            </Button>
-            <Button className="bg-orange-600 hover:bg-orange-700 text-white">
-              Register
-            </Button>
+            <Authentication />
           </div>
 
           {/* Mobile Menu Button */}
@@ -90,12 +86,7 @@ const Navbar: React.FC = () => {
             </Link>
 
             <div className="flex flex-col space-y-2 pt-2">
-              <Button variant="outline" className="border-orange-600 text-orange-600 w-full hover:bg-orange-50">
-                Log In
-              </Button>
-              <Button className="bg-orange-600 hover:bg-orange-700 text-white w-full">
-                Register
-              </Button>
+              <Authentication />
             </div>
           </div>
         </div>

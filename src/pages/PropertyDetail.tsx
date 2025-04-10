@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
-import { MapPin, Bed, Bath, Home, Ruler, Check, Calendar, ArrowLeft, ChevronRight, ChevronLeft } from 'lucide-react';
+import { MapPin, Bed, Bath, Home, Ruler, Check, Calendar, ArrowLeft, ChevronRight, ChevronLeft, Phone, Mail } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Badge } from '@/components/ui/badge';

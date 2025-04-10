@@ -18,33 +18,37 @@ export interface Property {
   bathrooms: number;
   area: number;
   image: string;
+  images?: string[]; // Add images array property
   description: string;
   features?: string[];
   specifications?: {
     [key: string]: string | number;
   };
   amenities?: string[];
-  postedOn?: string;
+  postedOn?: Date | string;
   agentInfo?: {
     name: string;
     phone: string;
     email: string;
     photo?: string;
     experience?: string;
+    agency?: string; // Add agency property
   };
+  featured?: boolean;
 }
 
 export interface PropertyFilters {
-  type?: 'rent' | 'sale';
+  type?: 'rent' | 'sale' | 'all';
   location?: string;
   priceRange?: {
     min?: number;
     max?: number;
   };
-  bedrooms?: number;
+  bedrooms?: number[];
   bathrooms?: number;
   area?: {
     min?: number;
     max?: number;
   };
+  furnished?: string[];
 }

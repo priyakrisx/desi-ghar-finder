@@ -1,25 +1,44 @@
 
-import React, { useState } from 'react';
-import { Link } from "react-router-dom";
-import { Menu, X, Home } from "lucide-react";
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation } from "react-router-dom";
+import { Menu, X, Home, ChevronLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Authentication from './Authentication';
+import { useMobileApp } from '@/hooks/use-mobile-app';
 
 const Navbar: React.FC = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
+  const { isNativeApp, hasSafeArea } = useMobileApp();
+  
+  const isDetailPage = location.pathname.includes('/property/');
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  // Close menu when route changes
+  useEffect(() => {
+    setIsMenuOpen(false);
+  }, [location.pathname]);
+
   return (
-    <nav className="bg-white shadow-sm sticky top-0 z-50">
+    <nav className={`bg-white shadow-sm sticky top-0 z-50 ${hasSafeArea ? 'pt-12' : ''}`}>
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center py-4">
+          {/* Back button on detail pages in mobile view */}
+          {isDetailPage && (
+            <Link to="/" className="md:hidden mr-2">
+              <ChevronLeft className="h-6 w-6 text-indigo-800" />
+            </Link>
+          )}
+          
           {/* Logo */}
           <Link to="/" className="flex items-center space-x-2">
             <Home className="h-6 w-6 text-orange-600" />
-            <span className="text-xl font-bold text-indigo-800">DesiGharFinder</span>
+            <span className={`text-xl font-bold text-indigo-800 ${isDetailPage && 'md:block hidden'}`}>
+              {isDetailPage && isNativeApp ? '' : 'DesiGharFinder'}
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -31,7 +50,7 @@ const Navbar: React.FC = () => {
             <Link to="/contact" className="text-neutral-700 hover:text-orange-600 font-medium">Contact</Link>
           </div>
 
-          {/* Login/Register Buttons - Replace with Authentication component */}
+          {/* Login/Register Buttons */}
           <div className="hidden md:flex items-center space-x-4">
             <Authentication />
           </div>

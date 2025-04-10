@@ -8,7 +8,6 @@ import {
   UserButton
 } from '@clerk/clerk-react';
 import { Button } from "@/components/ui/button";
-import { Google } from 'lucide-react';
 
 const Authentication: React.FC = () => {
   return (
